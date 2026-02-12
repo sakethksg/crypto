@@ -257,8 +257,6 @@ $$p_i = (k_{i \mod m} - c_i) \mod 26$$
 ---
 ## 8. Playfair Cipher
 
-## 8. Playfair Cipher
-
 **Aim:**  
 To implement a digraph substitution cipher that encrypts pairs of letters using a 5×5 matrix key.
 
