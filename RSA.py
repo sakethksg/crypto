@@ -1,21 +1,21 @@
 def main():
-    print("Enter first prime number (p): ", end="")
+    print("Enter first prime number (p):")
     p = int(input())
 
-    print("Enter second prime number (q): ", end="")
+    print("Enter second prime number (q):")
     q = int(input())
 
     n = p * q
     phi = (p - 1) * (q - 1)
 
-    print("Enter public exponent (e) [must be coprime to phi]: ", end="")
+    print("Enter public exponent (e) [must be coprime to phi]:")
     e = int(input())
     d = pow(e, -1, phi)
 
     print(f"Public Key: {{e={e}, n={n}}}")
     print(f"Private Key: {{d={d}, n={n}}}")
 
-    print("\nEnter a numeric message to encrypt: ", end="")
+    print("\nEnter a numeric message to encrypt:")
     message = int(input())
 
     encrypted = pow(message, e, n)
