@@ -255,3 +255,74 @@ $$c_i = (k_{i \mod m} - p_i) \mod 26$$
 $$p_i = (k_{i \mod m} - c_i) \mod 26$$
 
 ---
+## 8. Playfair Cipher
+
+**Aim:** 
+To implement a digraph substitution cipher that encrypts pairs of letters using a 5×5 matrix key.
+
+**Objective:**
+- Encrypt plaintext in pairs (digraphs) rather than single letters
+- Generate a 5×5 key matrix from a keyword
+- Understand how Playfair cipher improves security over simple substitution
+- Apply specific encryption rules for digraph processing
+- Perform decryption by reversing the encryption rules
+
+**Algorithm:**
+
+**Key Matrix Generation:**
+1. Choose a keyword (remove duplicate letters).
+2. Fill the 5×5 matrix row-wise with keyword letters.
+3. Fill remaining positions with rest of alphabet (I and J combined in single cell).
+4. Result: 5×5 grid of 25 letters.
+
+**Preprocessing Plaintext:**
+1. Convert to uppercase, replace J with I.
+2. Split into digraphs (pairs of letters):
+   - If both letters in a digraph are same, insert 'X' between them
+   - If odd number of letters, append 'X' at the end
+3. Examples: HE LL O → HE LX LO; BALLOON → BA LX LO ON
+
+**Encryption Rules (for digraph (a, b)):**
+
+Let (row₁, col₁) = position of a in matrix
+Let (row₂, col₂) = position of b in matrix
+
+**Rule 1 - Same row:**
+Shift both letters right by 1 (wrap around)
+- a' = matrix[row₁][(col₁ + 1) mod 5]
+- b' = matrix[row₂][(col₂ + 1) mod 5]
+
+**Rule 2 - Same column:**
+Shift both letters down by 1 (wrap around)
+- a' = matrix[(row₁ + 1) mod 5][col₁]
+- b' = matrix[(row₂ + 1) mod 5][col₂]
+
+**Rule 3 - Different row and column:**
+Swap columns (rectangle rule)
+- a' = matrix[row₁][col₂]
+- b' = matrix[row₂][col₁]
+
+**Decryption Rules:**
+
+**Rule 1 - Same row:**
+Shift both letters left by 1 (wrap around)
+- a = matrix[row₁][(col₁ - 1) mod 5]
+- b = matrix[row₂][(col₂ - 1) mod 5]
+
+**Rule 2 - Same column:**
+Shift both letters up by 1 (wrap around)
+- a = matrix[(row₁ - 1) mod 5][col₁]
+- b = matrix[(row₂ - 1) mod 5][col₂]
+
+**Rule 3 - Different row and column:**
+Swap columns (rectangle rule - same as encryption)
+- a = matrix[row₁][col₂]
+- b = matrix[row₂][col₁]
+
+**Postprocessing:**
+1. Remove inserted 'X' characters that were added:
+   - Remove X if it appears between identical letters
+   - Remove trailing X added for padding
+2. Replace I with appropriate J if needed
+
+---
