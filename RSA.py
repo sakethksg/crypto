@@ -15,13 +15,19 @@ def main():
     print(f"Public Key: {{e={e}, n={n}}}")
     print(f"Private Key: {{d={d}, n={n}}}")
 
-    print("\nEnter a numeric message to encrypt:")
-    message = int(input())
+    print("\nEnter a message to encrypt:")
+    message = input()
 
-    encrypted = pow(message, e, n)
+    encrypted = []
+    for ch in message:
+        encrypted.append(pow(ord(ch), e, n))
+
     print("Encrypted Message:", encrypted)
 
-    decrypted = pow(encrypted, d, n)
+    decrypted = ""
+    for num in encrypted:
+        decrypted += chr(pow(num, d, n))
+
     print("Decrypted Message:", decrypted)
 
 if __name__ == "__main__":
