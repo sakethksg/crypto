@@ -18,7 +18,7 @@ def primitive_roots(p):
         values = []
         
         for i in range(1, p):
-            values.append((g ** i) % p)
+            values.append((pow(g, i, p)))
         
         if len(set(values)) == p - 1:
             print(g, end=" ")
