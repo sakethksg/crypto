@@ -1,57 +1,36 @@
-import random
-import math
-
 def main():
-    p = int(input("Enter prime (p): "))
-    g = int(input("Enter alpha (g): "))
-    x = int(input("Enter private key (x): "))
+    print("Enter prime (p): ")
+    p = int(input())
 
+    print("Enter alpha: ")
+    g = int(input())
+
+    print("Enter private key (x): ")
+    x = int(input())
+
+    print("Enter random k: ")
+    k = int(input())
+
+    print("Message: ")
+    m = int(input())
+
+    # Public key
     y = pow(g, x, p)
 
-    while True:
-        k = random.randint(1, p - 2)
-        if math.gcd(k, p - 1) == 1:
-            break
+    # Encryption
+    c1 = pow(g, k, p)
+    c2 = (m * pow(y, k, p)) % p
 
-    print("Random k used:", k)
     print("Public Key (y):", y)
+    print("Ciphertext (c1):", c1)
+    print("Ciphertext (c2):", c2)
 
-    # =====(NUMERIC MESSAGE) =====
-    # m = int(input("Message: "))
-    # c1 = pow(g, k, p)
-    # c2 = (m * pow(y, k, p)) % p
-    #
-    # print("Ciphertext (c1):", c1)
-    # print("Ciphertext (c2):", c2)
-    #
-    # s = pow(c1, x, p)
-    # s_inv = pow(s, -1, p)
-    # decrypted_m = (c2 * s_inv) % p
-    #
-    # print("Decrypted Message:", decrypted_m)
+    # Decryption
+    s = pow(c1, x, p)
+    s_inv = pow(s, -1, p)
+    decrypted_m = (c2 * s_inv) % p
 
-
-    # ===== (STRING MESSAGE) =====
-    message = input("Message: ")
-    encrypted = []
-
-    for ch in message:
-        m = ord(ch)
-        c1 = pow(g, k, p)
-        c2 = (m * pow(y, k, p)) % p
-        encrypted.append((c1, c2))
-
-    print("Ciphertext:", encrypted)
-
-    decrypted_message = ""
-
-    for c1, c2 in encrypted:
-        s = pow(c1, x, p)
-        s_inv = pow(s, -1, p)
-        decrypted_m = (c2 * s_inv) % p
-        decrypted_message += chr(decrypted_m)
-
-    print("Decrypted Message:", decrypted_message)
+    print("Decrypted Message:", decrypted_m)
 
 
 if __name__ == "__main__":
